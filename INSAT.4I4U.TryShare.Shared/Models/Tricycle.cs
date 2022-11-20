@@ -13,9 +13,10 @@ namespace INSAT._4I4U.TryShare.Shared.Models
     /// </summary>
     public class Tricycle
     {
-        public required int ID { get; set; }
+        public int ID { get; set; }
         public required double LastKnownLatitude { get; set; }
         public required double LastKnownLongitude { get; set; }
+
         
         [Range(0, 100, ErrorMessage = "The value must be a whole percentage")]
         public required int BatteryPercentage { get; set; }
