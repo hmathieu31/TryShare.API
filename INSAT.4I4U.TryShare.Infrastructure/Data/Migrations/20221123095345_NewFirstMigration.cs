@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace INSAT._4I4U.TryShare.TricyclesAvailable.Data.Migrations
+namespace INSAT._4I4U.TryShare.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class NewFirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +16,10 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Data.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Latitude = table.Column<double>(type: "float", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false),
-                    BatteryPercentage = table.Column<int>(type: "int", nullable: false)
+                    LastKnownLatitude = table.Column<double>(type: "float", nullable: false),
+                    LastKnownLongitude = table.Column<double>(type: "float", nullable: false),
+                    BatteryPercentage = table.Column<int>(type: "int", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

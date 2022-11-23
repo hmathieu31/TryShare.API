@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using INSAT._4I4U.TryShare.Shared.Models;
-using INSAT._4I4U.TryShare.TricyclesAvailable.Data;
+using INSAT._4I4U.TryShare.Infrastructure;
+using INSAT._4I4U.TryShare.Core.Models;
 
 namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 {
@@ -16,7 +16,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
     /// <remarks>
     /// TODO: Change the endpoints to match the requirements.
     /// </remarks>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
     public class TricyclesController : ControllerBase
@@ -32,10 +32,10 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tricycle>>> GetTricycles()
         {
-          if (_context.Tricycles == null)
-          {
-              return NotFound();
-          }
+            if (_context.Tricycles == null)
+            {
+                return NotFound();
+            }
             return await _context.Tricycles.ToListAsync();
         }
 
@@ -43,10 +43,10 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tricycle>> GetTricycle(int id)
         {
-          if (_context.Tricycles == null)
-          {
-              return NotFound();
-          }
+            if (_context.Tricycles == null)
+            {
+                return NotFound();
+            }
             var tricycle = await _context.Tricycles.FindAsync(id);
 
             if (tricycle == null)
@@ -93,10 +93,10 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         [HttpPost]
         public async Task<ActionResult<Tricycle>> PostTricycle(Tricycle tricycle)
         {
-          if (_context.Tricycles == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Tricycles'  is null.");
-          }
+            if (_context.Tricycles == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Tricycles'  is null.");
+            }
             _context.Tricycles.Add(tricycle);
             await _context.SaveChangesAsync();
 
