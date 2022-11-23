@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\INSAT.4I4U.TryShare.Shared\INSAT.4I4U.TryShare.Shared.csproj" />
+    <ProjectReference Include="..\INSAT.4I4U.TryShare.Infrastructure\INSAT.4I4U.TryShare.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

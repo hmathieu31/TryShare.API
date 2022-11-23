@@ -1,7 +1,7 @@
-﻿using INSAT._4I4U.TryShare.Shared.Models;
+﻿using INSAT._4I4U.TryShare.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace INSAT._4I4U.TryShare.TricyclesAvailable.Data
+namespace INSAT._4I4U.TryShare.Infrastructure
 {
     public class ApplicationDbContext : DbContext
     {
