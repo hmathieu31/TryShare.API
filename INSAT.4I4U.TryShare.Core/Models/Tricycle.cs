@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using INSAT._4I4U.TryShare.Core.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace INSAT._4I4U.TryShare.Core.Models
 {
@@ -7,9 +8,8 @@ namespace INSAT._4I4U.TryShare.Core.Models
     /// LastKnownLocation is determined by LastKnownLongitude and LastKnownLatitude.
     /// TODO: Add range on latitude and longitude values
     /// </summary>
-    public class Tricycle
+    public class Tricycle : EntityBase
     {
-        public int ID { get; set; }
         public required double LastKnownLatitude { get; set; }
         public required double LastKnownLongitude { get; set; }
 

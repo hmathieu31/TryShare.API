@@ -23,11 +23,11 @@ namespace INSAT._4I4U.TryShare.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("INSAT._4I4U.TryShare.Core.Models.Tricycle", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BatteryPercentage")
                         .HasColumnType("int");
@@ -41,7 +41,7 @@ namespace INSAT._4I4U.TryShare.Infrastructure.Data.Migrations
                     b.Property<double>("LastKnownLongitude")
                         .HasColumnType("float");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Tricycles");
                 });

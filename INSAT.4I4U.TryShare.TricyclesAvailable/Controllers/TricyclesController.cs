@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using INSAT._4I4U.TryShare.Infrastructure;
 using INSAT._4I4U.TryShare.Core.Models;
+using INSAT._4I4U.TryShare.Infrastructure.Exceptions;
+using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 
 namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 {
@@ -21,40 +23,44 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
     [ApiController]
     public class TricyclesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITricyleService _service;
 
-        public TricyclesController(ApplicationDbContext context)
+        public TricyclesController(ITricyleService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/Tricycles
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tricycle>>> GetTricycles()
         {
-            if (_context.Tricycles == null)
+            try
+            {
+                return await _service.GetAllAsync();
+            }
+            catch (NullDbSetException)
             {
                 return NotFound();
             }
-            return await _context.Tricycles.ToListAsync();
         }
 
         // GET: api/Tricycles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Tricycle>> GetTricycle(int id)
         {
-            if (_context.Tricycles == null)
+            try
             {
+                var tri = await _service.GetByIdAsync(id);
+                if (tri is null)
+                    return NotFound();
+
+                return tri;
+            }
+            catch (NullDbSetException)
+            {
+
                 return NotFound();
             }
-            var tricycle = await _context.Tricycles.FindAsync(id);
-
-            if (tricycle == null)
-            {
-                return NotFound();
-            }
-
-            return tricycle;
         }
 
         // PUT: api/Tricycles/5
@@ -62,20 +68,24 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTricycle(int id, Tricycle tricycle)
         {
-            if (id != tricycle.ID)
-            {
+            if (id != tricycle.Id)
                 return BadRequest();
-            }
-
-            _context.Entry(tricycle).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.UpdateAsync(tricycle);
+            }
+            catch (NullDbSetException)
+            {
+                return NotFound();
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TricycleExists(id))
+                if (await _service.GetByIdAsync(id) is null)
                 {
                     return NotFound();
                 }
@@ -84,7 +94,6 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -93,39 +102,40 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         [HttpPost]
         public async Task<ActionResult<Tricycle>> PostTricycle(Tricycle tricycle)
         {
-            if (_context.Tricycles == null)
+            try
+            {
+                await _service.CreateAsync(tricycle);
+            }
+            catch (NullDbSetException)
             {
                 return Problem("Entity set 'ApplicationDbContext.Tricycles'  is null.");
             }
-            _context.Tricycles.Add(tricycle);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTricycle", new { id = tricycle.ID }, tricycle);
+            return CreatedAtAction("GetTricycle", new { id = tricycle.Id }, tricycle);
         }
 
         // DELETE: api/Tricycles/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTricycle(int id)
         {
-            if (_context.Tricycles == null)
+            try
             {
-                return NotFound();
-            }
-            var tricycle = await _context.Tricycles.FindAsync(id);
-            if (tricycle == null)
-            {
-                return NotFound();
-            }
+                var tri = await _service.GetByIdAsync(id);
+                if (tri is null)
+                    return NotFound();
 
-            _context.Tricycles.Remove(tricycle);
-            await _context.SaveChangesAsync();
+                await _service.DeleteAsync(tri);
+            }
+            catch (NullDbSetException)
+            {
+                return NotFound();
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
 
             return NoContent();
-        }
-
-        private bool TricycleExists(int id)
-        {
-            return (_context.Tricycles?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }
