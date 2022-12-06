@@ -7,6 +7,8 @@ using INSAT._4I4U.TryShare.Core.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Diagnostics;
+using Microsoft.OpenApi.Models;
 
 namespace INSAT._4I4U.TryShare.TricyclesAvailable
 {
@@ -19,6 +21,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             // Add services to the container.
             builder.RegisterServices();
 
+            // Add logging for the application.
+            builder.Services.AddLogging();
 
             // Add the DbContext to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -30,14 +34,22 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "TryShare API",
+                    Version = "v1",
+                    Description = "An ASP.NET Core Web API for TryShare tricycle project",
+                });
+            });
 
             var app = builder.Build();
+            app.UseSwagger();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
-            { 
-                app.UseSwagger();
+            {
                 app.UseSwaggerUI();
             }
 
