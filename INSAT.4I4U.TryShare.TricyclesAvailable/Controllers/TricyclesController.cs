@@ -109,7 +109,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         }
 
         // DELETE: api/Tricycles/5
-        [HttpDelete("{id}", nameof(DeleteTricycle)]
+        [HttpDelete("{id}", Name = nameof(DeleteTricycle))]
         public async Task<IActionResult> DeleteTricycle(int id)
         {
             try
