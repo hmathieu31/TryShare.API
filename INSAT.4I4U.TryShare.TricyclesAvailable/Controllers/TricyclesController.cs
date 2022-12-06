@@ -30,43 +30,41 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             _service = service;
         }
 
-        // GET: api/Tricycles
-        [HttpGet]
+        /// <summary>
+        /// Gets all the tricycles. 
+        /// </summary>
+        /// <returns>A list of all tricycles available</returns>
+        [HttpGet(Name = nameof(GetTricycles))]
+        [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<Tricycle>>> GetTricycles()
         {
-            try
-            {
-                return await _service.GetAllAsync();
-            }
-            catch (NullDbSetException)
-            {
-                return NotFound();
-            }
+            return await _service.GetAllAsync();
         }
 
-        // GET: api/Tricycles/5
-        [HttpGet("{id}")]
+        /// <summary>
+        /// Gets the tricycle.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet("{id}", Name = nameof(GetTricycle))]
         public async Task<ActionResult<Tricycle>> GetTricycle(int id)
         {
-            try
-            {
                 var tri = await _service.GetByIdAsync(id);
                 if (tri is null)
                     return NotFound();
 
                 return tri;
-            }
-            catch (NullDbSetException)
-            {
-
-                return NotFound();
-            }
         }
 
-        // PUT: api/Tricycles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTricycle(int id, Tricycle tricycle)
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754        
+        /// <summary>
+        /// Updates the tricycle.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="tricycle">The tricycle.</param>
+        /// <returns></returns>
+        [HttpPut("{id}", Name = nameof(UpdateTricycle))]
+        public async Task<IActionResult> UpdateTricycle(int id, Tricycle tricycle)
         {
             if (id != tricycle.Id)
                 return BadRequest();
@@ -74,10 +72,6 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             try
             {
                 await _service.UpdateAsync(tricycle);
-            }
-            catch (NullDbSetException)
-            {
-                return NotFound();
             }
             catch (EntityNotFoundException)
             {
@@ -99,7 +93,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 
         // POST: api/Tricycles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost(Name = nameof(PostTricycle))]
         public async Task<ActionResult<Tricycle>> PostTricycle(Tricycle tricycle)
         {
             try
@@ -115,7 +109,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         }
 
         // DELETE: api/Tricycles/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = nameof(DeleteTricycle))]
         public async Task<IActionResult> DeleteTricycle(int id)
         {
             try
