@@ -2,7 +2,7 @@
 using INSAT._4I4U.TryShare.Core.Models.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace INSAT._4I4U.TryShare.Infrastructure
+namespace INSAT._4I4U.TryShare.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
