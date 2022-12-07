@@ -1,7 +1,6 @@
 using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Services.Tricycles;
-using INSAT._4I4U.TryShare.Infrastructure;
 using INSAT._4I4U.TryShare.Infrastructure.Repository;
 using INSAT._4I4U.TryShare.Core.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Diagnostics;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using INSAT._4I4U.TryShare.Infrastructure.Data;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace INSAT._4I4U.TryShare.TricyclesAvailable

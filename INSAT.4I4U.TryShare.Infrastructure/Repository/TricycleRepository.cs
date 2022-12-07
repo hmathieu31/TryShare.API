@@ -1,6 +1,7 @@
 ﻿using INSAT._4I4U.TryShare.Core.Interfaces.Repository;
 using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Models.Base;
+using INSAT._4I4U.TryShare.Infrastructure.Data;
 using INSAT._4I4U.TryShare.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
