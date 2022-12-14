@@ -10,9 +10,12 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
     public interface ITricyleService
     {
         Task<List<Tricycle>> GetAllAsync();
-        Task<Tricycle?> GetByIdAsync(int id);
-        Task CreateAsync(Tricycle tricycle);
-        Task UpdateAsync(Tricycle tricycle);
-        Task DeleteAsync(Tricycle tricycle);
+        /// <summary>
+        /// Requests the tricycle booking for a user
+        /// </summary>
+        /// <param name="tricycle">The tricycle.</param>
+        /// <returns></returns>
+        Task RequestTricycleBooking(Tricycle tricycle);
+        Task RequestEndOfBooking();
     }
 }
