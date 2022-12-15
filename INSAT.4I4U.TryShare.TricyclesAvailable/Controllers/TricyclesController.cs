@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using INSAT._4I4U.TryShare.Infrastructure;
+﻿using Microsoft.AspNetCore.Mvc;
 using INSAT._4I4U.TryShare.Core.Models;
-using INSAT._4I4U.TryShare.Infrastructure.Exceptions;
 using INSAT._4I4U.TryShare.Core.Interfaces.Services;
+using INSAT._4I4U.TryShare.Core.Exceptions;
 
 namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 {
@@ -41,8 +34,47 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             return await _service.GetAllAsync();
         }
 
+        /// <summary>
+        /// Gets the tricycle.
+        /// </summary>
+        /// <param name="id">The ID of the tricycle.</param>
+        /// <returns></returns>
+        [HttpGet("{id}", Name = nameof(GetTricycle))]
+        public async Task<ActionResult<Tricycle>> GetTricycle(int id)
+        {
+            var tricycle = await _service.GetByIdAsync(id);
 
+            if (tricycle is null)
+                return NotFound();
 
+            return Ok(tricycle);
+        }
 
+        /// <summary>
+        /// Requests the start of the booking for a tricycle.
+        /// </summary>
+        /// <param name="id">The identifier of the tricycle.</param>
+        /// <returns></returns>
+        [HttpPost("{id}/requestBooking",Name = nameof(RequestTricycleBooking))]
+        public async Task<ActionResult> RequestTricycleBooking(int id)
+        {
+            var tricycle = await _service.GetByIdAsync(id);
+            if (tricycle is null)
+                return NotFound(id);
+
+            try
+            {
+                await _service.RequestTricycleBookingAsync(tricycle);
+                return Ok(tricycle);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound(id);
+            }
+            catch (TricycleNotAvailableException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
