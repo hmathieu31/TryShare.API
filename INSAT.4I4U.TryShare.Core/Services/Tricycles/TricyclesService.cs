@@ -37,6 +37,11 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             if (!tricycle.IsAvailable)
                 throw new TricycleNotAvailableException();
 
+            await RequestTricycleBookingInternalAsync(tricycle);
+        }
+
+        private async Task RequestTricycleBookingInternalAsync(Tricycle tricycle)
+        {
             tricycle.IsAvailable = false;
             await _tricycleRepository.UpdateAsync(tricycle);
         }
@@ -46,5 +51,23 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             throw new NotImplementedException();
         }
 
+        public async Task SignalEnteringDangerZone(Tricycle tricycle)
+        {
+            if (tricycle is null)
+                throw new ArgumentNullException(nameof(tricycle));
+
+            tricycle.IsInDangerZone = true;
+            await _tricycleRepository.UpdateAsync(tricycle);
+        }
+
+        public Task SignallLeavingDangerZone(Tricycle tricycle)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateAsync(Tricycle tricycle)
+        {
+            await _tricycleRepository.UpdateAsync(tricycle);
+        }
     }
 }

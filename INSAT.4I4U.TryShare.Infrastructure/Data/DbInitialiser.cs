@@ -25,14 +25,16 @@ namespace INSAT._4I4U.TryShare.Infrastructure.Data
                     BatteryPercentage = 24,
                     IsAvailable = false,
                     LastKnownLatitude = 425.0,
-                    LastKnownLongitude = 1023.0
+                    LastKnownLongitude = 1023.0,
+                    IsInDangerZone = true,
                 },
                 new Tricycle
                 {
                     BatteryPercentage = 24,
                     IsAvailable = false,
                     LastKnownLatitude = 3680.9,
-                    LastKnownLongitude = 2474.2
+                    LastKnownLongitude = 2474.2,
+                    IsInDangerZone = false,
                 }
             };
 

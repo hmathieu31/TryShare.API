@@ -30,6 +30,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
             // Add the database exception filter
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -47,6 +48,23 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             });
 
             var app = builder.Build();
+
+            // Initialise database if not done already
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var initialiser = scope.ServiceProvider.GetRequiredService<DbInitialiser>();
+            //    initialiser.Run();
+            //    // Free all tricycles on startup
+            //    initialiser.FreeTricycles();
+            //}
+
+            // Apply migrations
+            //using (var context = app.Services.GetRequiredService<ApplicationDbContext>())
+            //{
+            //    context.Database.Migrate();
+            //}
+
+
             app.UseSwagger();
 
             // Configure the HTTP request pipeline.
@@ -68,6 +86,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
         {
             builder.Services
                 .AddScoped<IRepository<Tricycle>, TricycleRepository>()
+                .AddTransient<DbInitialiser>()
                 .AddScoped<ITricyleService, TricyclesService>();
 
             return builder;

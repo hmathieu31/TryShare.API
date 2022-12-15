@@ -2,6 +2,8 @@
 using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 using INSAT._4I4U.TryShare.Core.Exceptions;
+using INSAT._4I4U.TryShare.Infrastructure.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 {
@@ -55,7 +57,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// </summary>
         /// <param name="id">The identifier of the tricycle.</param>
         /// <returns></returns>
-        [HttpPost("{id}/requestBooking",Name = nameof(RequestTricycleBooking))]
+        [HttpPost("{id}/requestBooking", Name = nameof(RequestTricycleBooking))]
         public async Task<ActionResult> RequestTricycleBooking(int id)
         {
             var tricycle = await _service.GetByIdAsync(id);
@@ -75,6 +77,52 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost("{id}/signalDanger", Name = nameof(SignalEnteringDangerZone))]
+        public async Task<ActionResult> SignalEnteringDangerZone(int id)
+        {
+            var tricycle = await _service.GetByIdAsync(id);
+            if (tricycle is null)
+                return NotFound(id);
+
+            try
+            {
+                await _service.SignalEnteringDangerZone(tricycle);
+                return Ok(tricycle);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound(id);
+            }
+        }
+
+        [HttpPut("{id}", Name = nameof(UpdateTricycle))]
+        public async Task<IActionResult> UpdateTricycle(int id, Tricycle tricycle)
+        {
+            if (id != tricycle.Id)
+                return BadRequest();
+
+            try
+            {
+                await _service.UpdateAsync(tricycle);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (await _service.GetByIdAsync(id) is null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
         }
     }
 }

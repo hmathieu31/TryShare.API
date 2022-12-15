@@ -28,5 +28,20 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         Task RequestEndOfBookingAsync();
+        /// <summary>
+        /// Signals that the tricycle is entering danger zone.
+        /// </summary>
+        /// <param name="tricycle">The tricycle entering a danger zone.</param>
+        /// <returns></returns>
+        Task SignalEnteringDangerZone(Tricycle tricycle);
+        /// <summary>
+        /// Signals that the tricycle is leaving a danger zone
+        /// </summary>
+        /// <param name="tricycle">The tricycle leaving the danger zone.</param>
+        /// <returns></returns>
+        Task SignallLeavingDangerZone(Tricycle tricycle);
+
+        Task UpdateAsync(Tricycle tricycle);
+
     }
 }
