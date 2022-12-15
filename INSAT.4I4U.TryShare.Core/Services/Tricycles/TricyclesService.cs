@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Interfaces.Repository;
+using INSAT._4I4U.TryShare.Core.Exceptions;
 
 namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
 {
@@ -28,19 +29,22 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             return await _tricycleRepository.GetByIdAsync(id);
         }
 
-        public async Task CreateAsync(Tricycle tricycle)
+        public async Task RequestTricycleBookingAsync(Tricycle tricycle)
         {
-            await _tricycleRepository.CreateAsync(tricycle);
-        }
+            if (tricycle is null)
+                throw new ArgumentNullException(nameof(tricycle));
 
-        public async Task UpdateAsync(Tricycle tricycle)
-        {
+            if (!tricycle.IsAvailable)
+                throw new TricycleNotAvailableException();
+
+            tricycle.IsAvailable = false;
             await _tricycleRepository.UpdateAsync(tricycle);
         }
 
-        public async Task DeleteAsync(Tricycle tricycle)
+        public Task RequestEndOfBookingAsync()
         {
-            await _tricycleRepository.DeleteAsync(tricycle);
+            throw new NotImplementedException();
         }
+
     }
 }

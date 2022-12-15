@@ -11,11 +11,22 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
     {
         Task<List<Tricycle>> GetAllAsync();
         /// <summary>
+        /// Gets the tricycle by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        Task<Tricycle?> GetByIdAsync(int id);
+        /// <summary>
         /// Requests the tricycle booking for a user
         /// </summary>
         /// <param name="tricycle">The tricycle.</param>
         /// <returns></returns>
-        Task RequestTricycleBooking(Tricycle tricycle);
-        Task RequestEndOfBooking();
+        Task RequestTricycleBookingAsync(Tricycle tricycle);
+        /// <summary>
+        /// Requests the end of booking.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        Task RequestEndOfBookingAsync();
     }
 }
