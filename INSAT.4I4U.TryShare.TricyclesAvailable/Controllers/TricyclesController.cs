@@ -10,9 +10,6 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
     /// <summary>
     /// Controller exposing the Tricycles API.
     /// </summary>
-    /// <remarks>
-    /// TODO: Change the endpoints to match the requirements.
-    /// </remarks>
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
@@ -20,6 +17,10 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
     {
         private readonly ITricyleService _service;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TricyclesController"/> class.
+        /// </summary>
+        /// <param name="service">The service operating on Tricycles.</param>
         public TricyclesController(ITricyleService service)
         {
             _service = service;
@@ -42,6 +43,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// <param name="id">The ID of the tricycle.</param>
         /// <returns></returns>
         [HttpGet("{id}", Name = nameof(GetTricycle))]
+        [Produces("application/json")]
         public async Task<ActionResult<Tricycle>> GetTricycle(int id)
         {
             var tricycle = await _service.GetByIdAsync(id);
@@ -67,7 +69,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             try
             {
                 await _service.RequestTricycleBookingAsync(tricycle);
-                return Ok(tricycle);
+                return Ok();
             }
             catch (ArgumentNullException)
             {
@@ -79,6 +81,11 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             }
         }
 
+        /// <summary>
+        /// Signals the tricycle entering a danger zone.
+        /// </summary>
+        /// <param name="id">The ID of the tricycle.</param>
+        /// <returns></returns>
         [HttpPost("{id}/signalDanger", Name = nameof(SignalEnteringDangerZone))]
         public async Task<ActionResult> SignalEnteringDangerZone(int id)
         {
@@ -89,7 +96,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             try
             {
                 await _service.SignalEnteringDangerZone(tricycle);
-                return Ok(tricycle);
+                return Ok();
             }
             catch (ArgumentNullException)
             {
@@ -97,6 +104,13 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the tricycle.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="tricycle">The tricycle.</param>
+        /// <returns></returns>
+        /// <remarks>Test method to be deleted</remarks>
         [HttpPut("{id}", Name = nameof(UpdateTricycle))]
         public async Task<IActionResult> UpdateTricycle(int id, Tricycle tricycle)
         {
