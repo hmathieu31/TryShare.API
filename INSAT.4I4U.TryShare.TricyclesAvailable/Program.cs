@@ -28,7 +28,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
 
             // Add the DbContext to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                providerOptions => providerOptions.EnableRetryOnFailure()));
 
 
             // Add the database exception filter
