@@ -34,13 +34,13 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
         /// <param name="tricycle">The tricycle entering a danger zone.</param>
         /// <returns></returns>
         /// <exception cref="EntityNotFoundException" />
-        Task SignalEnteringDangerZone(Tricycle tricycle);
+        Task SignalEnteringDangerZoneAsync(Tricycle tricycle);
         /// <summary>
         /// Signals that the tricycle is leaving a danger zone
         /// </summary>
         /// <param name="tricycle">The tricycle leaving the danger zone.</param>
         /// <returns></returns>
-        Task SignallLeavingDangerZone(Tricycle tricycle);
+        Task SignallLeavingDangerZoneAsync(Tricycle tricycle);
 
         Task UpdateAsync(Tricycle tricycle);
 

@@ -95,7 +95,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 
             try
             {
-                await _service.SignalEnteringDangerZone(tricycle);
+                await _service.SignalEnteringDangerZoneAsync(tricycle);
                 return Ok();
             }
             catch (EntityNotFoundException)
@@ -118,7 +118,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 
             try
             {
-                await _service.SignallLeavingDangerZone(tricycle);
+                await _service.SignallLeavingDangerZoneAsync(tricycle);
                 return Ok();
             }
             catch (EntityNotFoundException)

@@ -51,7 +51,7 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             throw new NotImplementedException();
         }
 
-        public Task SignalEnteringDangerZone(Tricycle tricycle)
+        public Task SignalEnteringDangerZoneAsync(Tricycle tricycle)
         {
             if (tricycle is null)
                 throw new ArgumentNullException(nameof(tricycle));
@@ -65,7 +65,7 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             await _tricycleRepository.UpdateAsync(tricycle);
         }
 
-        public Task SignallLeavingDangerZone(Tricycle tricycle)
+        public Task SignallLeavingDangerZoneAsync(Tricycle tricycle)
         {
             if (tricycle is null)
                 throw new ArgumentNullException(nameof(tricycle));

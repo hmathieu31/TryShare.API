@@ -50,22 +50,6 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
 
             var app = builder.Build();
 
-            // Initialise database if not done already
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var initialiser = scope.ServiceProvider.GetRequiredService<DbInitialiser>();
-            //    initialiser.Run();
-            //    // Free all tricycles on startup
-            //    initialiser.FreeTricycles();
-            //}
-
-            // Apply migrations
-            //using (var context = app.Services.GetRequiredService<ApplicationDbContext>())
-            //{
-            //    context.Database.Migrate();
-            //}
-
-
             app.UseSwagger();
 
             // Configure the HTTP request pipeline.
