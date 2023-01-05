@@ -10,9 +10,39 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
     public interface ITricyleService
     {
         Task<List<Tricycle>> GetAllAsync();
+        /// <summary>
+        /// Gets the tricycle by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         Task<Tricycle?> GetByIdAsync(int id);
-        Task CreateAsync(Tricycle tricycle);
+        /// <summary>
+        /// Requests the tricycle booking for a user
+        /// </summary>
+        /// <param name="tricycle">The tricycle.</param>
+        /// <returns></returns>
+        Task RequestTricycleBookingAsync(Tricycle tricycle);
+        /// <summary>
+        /// Requests the end of booking.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        Task RequestEndOfBookingAsync();
+        /// <summary>
+        /// Signals that the tricycle is entering danger zone.
+        /// </summary>
+        /// <param name="tricycle">The tricycle entering a danger zone.</param>
+        /// <returns></returns>
+        /// <exception cref="EntityNotFoundException" />
+        Task SignalEnteringDangerZoneAsync(Tricycle tricycle);
+        /// <summary>
+        /// Signals that the tricycle is leaving a danger zone
+        /// </summary>
+        /// <param name="tricycle">The tricycle leaving the danger zone.</param>
+        /// <returns></returns>
+        Task SignallLeavingDangerZoneAsync(Tricycle tricycle);
+
         Task UpdateAsync(Tricycle tricycle);
-        Task DeleteAsync(Tricycle tricycle);
+
     }
 }

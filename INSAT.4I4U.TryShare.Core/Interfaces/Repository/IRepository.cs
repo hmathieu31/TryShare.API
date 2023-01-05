@@ -33,7 +33,8 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Repository
         /// <exception cref="NullDbSetException"></exception> 
         Task CreateAsync(T entity);
         /// <summary>
-        /// Updates the specified entity.
+        /// Searchs the repository for an entity of same <c>Id</c> as <paramref name="entity"/>
+        /// and updates its values if found.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>

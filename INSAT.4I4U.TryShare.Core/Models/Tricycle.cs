@@ -18,5 +18,6 @@ namespace INSAT._4I4U.TryShare.Core.Models
         [Range(0, MaximumPercentage, ErrorMessage = "The value must be a whole percentage")]
         public required int BatteryPercentage { get; set; }
         public required bool IsAvailable { get; set; }
+        public required bool IsInDangerZone { get; set; }
     }
 }

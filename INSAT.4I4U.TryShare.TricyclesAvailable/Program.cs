@@ -28,7 +28,9 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
 
             // Add the DbContext to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                providerOptions => providerOptions.EnableRetryOnFailure()));
+
 
             // Add the database exception filter
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -47,6 +49,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             });
 
             var app = builder.Build();
+
             app.UseSwagger();
 
             // Configure the HTTP request pipeline.
@@ -68,6 +71,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
         {
             builder.Services
                 .AddScoped<IRepository<Tricycle>, TricycleRepository>()
+                .AddTransient<DbInitialiser>()
                 .AddScoped<ITricyleService, TricyclesService>();
 
             return builder;
