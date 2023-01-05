@@ -29,7 +29,7 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             return await _tricycleRepository.GetByIdAsync(id);
         }
 
-        public async Task RequestTricycleBookingAsync(Tricycle tricycle)
+        public Task RequestTricycleBookingAsync(Tricycle tricycle)
         {
             if (tricycle is null)
                 throw new ArgumentNullException(nameof(tricycle));
@@ -37,7 +37,7 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             if (!tricycle.IsAvailable)
                 throw new TricycleNotAvailableException();
 
-            await RequestTricycleBookingInternalAsync(tricycle);
+            return RequestTricycleBookingInternalAsync(tricycle);
         }
 
         private async Task RequestTricycleBookingInternalAsync(Tricycle tricycle)
@@ -51,18 +51,32 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             throw new NotImplementedException();
         }
 
-        public async Task SignalEnteringDangerZone(Tricycle tricycle)
+        public Task SignalEnteringDangerZone(Tricycle tricycle)
         {
             if (tricycle is null)
                 throw new ArgumentNullException(nameof(tricycle));
 
+            return SignalEnteringDangerZoneInternalAsync(tricycle);
+        }
+
+        private async Task SignalEnteringDangerZoneInternalAsync(Tricycle tricycle)
+        {
             tricycle.IsInDangerZone = true;
             await _tricycleRepository.UpdateAsync(tricycle);
         }
 
         public Task SignallLeavingDangerZone(Tricycle tricycle)
         {
-            throw new NotImplementedException();
+            if (tricycle is null)
+                throw new ArgumentNullException(nameof(tricycle));
+
+            return SignalLeavingDangerZoneInternalAsync(tricycle);
+        }
+
+        private async Task SignalLeavingDangerZoneInternalAsync(Tricycle tricycle)
+        {
+            tricycle.IsInDangerZone = false;
+            await _tricycleRepository.UpdateAsync(tricycle);
         }
 
         public async Task UpdateAsync(Tricycle tricycle)

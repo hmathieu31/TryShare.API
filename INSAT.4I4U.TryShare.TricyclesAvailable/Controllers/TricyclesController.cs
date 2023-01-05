@@ -98,7 +98,30 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
                 await _service.SignalEnteringDangerZone(tricycle);
                 return Ok();
             }
-            catch (ArgumentNullException)
+            catch (EntityNotFoundException)
+            {
+                return NotFound(id);
+            }
+        }
+
+        /// <summary>
+        /// Signals the tricycle is leaving a danger zone.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost("{id}/signalDangerEnd", Name = nameof(SignalLeavingDangerZone))]
+        public async Task<ActionResult> SignalLeavingDangerZone(int id)
+        {
+            var tricycle = await _service.GetByIdAsync(id);
+            if (tricycle is null)
+                return NotFound(id);
+
+            try
+            {
+                await _service.SignallLeavingDangerZone(tricycle);
+                return Ok();
+            }
+            catch (EntityNotFoundException)
             {
                 return NotFound(id);
             }
@@ -129,7 +152,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             {
                 if (await _service.GetByIdAsync(id) is null)
                 {
-                    return NotFound();
+                    return NotFound(id);
                 }
                 else
                 {
