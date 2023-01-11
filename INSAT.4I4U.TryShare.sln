@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "INSAT.4I4U.TryShare.Tricycl
 		{E6F40B25-3A0E-414B-B0F1-7D43D2D16915} = {E6F40B25-3A0E-414B-B0F1-7D43D2D16915}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INSAT.4I4U.TryShare.Core", "INSAT.4I4U.TryShare.Core\INSAT.4I4U.TryShare.Core.csproj", "{E6F40B25-3A0E-414B-B0F1-7D43D2D16915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "INSAT.4I4U.TryShare.Core", "INSAT.4I4U.TryShare.Core\INSAT.4I4U.TryShare.Core.csproj", "{E6F40B25-3A0E-414B-B0F1-7D43D2D16915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INSAT.4I4U.TryShare.Infrastructure", "INSAT.4I4U.TryShare.Infrastructure\INSAT.4I4U.TryShare.Infrastructure.csproj", "{4D014DAE-E400-4FF7-8F96-BC58DFB0CE6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "INSAT.4I4U.TryShare.Infrastructure", "INSAT.4I4U.TryShare.Infrastructure\INSAT.4I4U.TryShare.Infrastructure.csproj", "{4D014DAE-E400-4FF7-8F96-BC58DFB0CE6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
