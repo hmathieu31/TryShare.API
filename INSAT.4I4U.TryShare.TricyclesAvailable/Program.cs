@@ -32,7 +32,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(builder.Configuration);
             builder.Services.AddAuthorization();
-            
+
             // Add the DbContext to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -58,12 +58,9 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             var app = builder.Build();
 
             app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwaggerUI();
-            }
 
             app.UseHttpsRedirection();
 
