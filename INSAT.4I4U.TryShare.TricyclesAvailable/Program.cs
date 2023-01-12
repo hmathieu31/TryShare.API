@@ -10,6 +10,8 @@ using System.Diagnostics;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using INSAT._4I4U.TryShare.Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace INSAT._4I4U.TryShare.TricyclesAvailable
@@ -26,6 +28,11 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             // Add logging for the application.
             builder.Services.AddLogging();
 
+            // Configure authentication and authentification
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(builder.Configuration);
+            builder.Services.AddAuthorization();
+            
             // Add the DbContext to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -60,7 +67,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthorization()
+               .UseAuthentication();
 
             app.MapControllers();
 
