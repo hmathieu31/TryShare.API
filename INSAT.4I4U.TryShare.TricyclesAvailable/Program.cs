@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using INSAT._4I4U.TryShare.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Logging;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace INSAT._4I4U.TryShare.TricyclesAvailable
@@ -64,10 +65,22 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization()
-               .UseAuthentication();
+            app.UseRouting();
 
-            app.MapControllers();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+#pragma warning disable ASP0014 // Suggest using top level route registrations
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+#pragma warning restore ASP0014 // Suggest using top level route registrations
+
+            // Debug configuration: do not hide personal information in exceptions
+            // Remove after debug
+            IdentityModelEventSource.ShowPII = true;
+
 
             app.Run();
         }
