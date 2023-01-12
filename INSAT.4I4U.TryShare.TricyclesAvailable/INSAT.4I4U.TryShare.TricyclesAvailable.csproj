@@ -30,4 +30,6 @@
         <ProjectReference Include="..\INSAT.4I4U.TryShare.Infrastructure\INSAT.4I4U.TryShare.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -5,6 +5,7 @@ using INSAT._4I4U.TryShare.Core.Exceptions;
 using INSAT._4I4U.TryShare.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 {
@@ -14,6 +15,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [Authorize]
+    [RequiredScope("access_as_user")]
     [ApiController]
     public class TricyclesController : ControllerBase
     {
