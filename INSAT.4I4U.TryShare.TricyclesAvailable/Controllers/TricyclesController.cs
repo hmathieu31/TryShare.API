@@ -14,8 +14,6 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
     /// </summary>
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
-    [Authorize]
-    [RequiredScope("access_as_user")]
     [ApiController]
     public class TricyclesController : ControllerBase
     {
@@ -63,6 +61,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// </summary>
         /// <param name="id">The identifier of the tricycle.</param>
         /// <returns></returns>
+        [Authorize]
+        [RequiredScope("access_as_user")]
         [HttpPost("{id}/requestBooking", Name = nameof(RequestTricycleBooking))]
         public async Task<ActionResult> RequestTricycleBooking(int id)
         {
@@ -90,6 +90,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// </summary>
         /// <param name="id">The ID of the tricycle.</param>
         /// <returns></returns>
+        [Authorize]
+        [RequiredScope("access_as_user")]
         [HttpPost("{id}/signalDanger", Name = nameof(SignalEnteringDangerZone))]
         public async Task<ActionResult> SignalEnteringDangerZone(int id)
         {
@@ -113,6 +115,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
+        [RequiredScope("access_as_user")]
         [HttpPost("{id}/signalDangerEnd", Name = nameof(SignalLeavingDangerZone))]
         public async Task<ActionResult> SignalLeavingDangerZone(int id)
         {
@@ -138,6 +142,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// <param name="tricycle">The tricycle.</param>
         /// <returns></returns>
         /// <remarks>Test method to be deleted</remarks>
+        [Authorize]
+        [RequiredScope("access_as_user")]
         [HttpPut("{id}", Name = nameof(UpdateTricycle))]
         public async Task<IActionResult> UpdateTricycle(int id, Tricycle tricycle)
         {
