@@ -46,9 +46,21 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             await _tricycleRepository.UpdateAsync(tricycle);
         }
 
-        public Task RequestEndOfBookingAsync()
+        public Task RequestEndOfBookingAsync(Tricycle tricycle)
         {
-            throw new NotImplementedException();
+            if (tricycle is null)
+                throw new ArgumentNullException(nameof(tricycle));
+
+            if (tricycle.IsAvailable)
+                throw new TricycleNotAvailableException();
+
+            return RequestTricycleEndOfBookingInternalAsync(tricycle);
+        }
+
+        private async Task RequestTricycleEndOfBookingInternalAsync(Tricycle tricycle)
+        {
+            tricycle.IsAvailable = true;
+            await _tricycleRepository.UpdateAsync(tricycle);
         }
 
         public Task SignalEnteringDangerZoneAsync(Tricycle tricycle)

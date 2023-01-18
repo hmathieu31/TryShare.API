@@ -86,6 +86,35 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         }
 
         /// <summary>
+        /// Requests the start of the booking for a tricycle.
+        /// </summary>
+        /// <param name="id">The identifier of the tricycle.</param>
+        /// <returns></returns>
+        [Authorize]
+        [RequiredScope("access_as_user")]
+        [HttpPost("{id}/requestEnOfBooking", Name = nameof(RequestTricycleEndOfBooking))]
+        public async Task<ActionResult> RequestTricycleEndOfBooking(int id)
+        {
+            var tricycle = await _service.GetByIdAsync(id);
+            if (tricycle is null)
+                return NotFound(id);
+
+            try
+            {
+                await _service.RequestEndOfBookingAsync(tricycle);
+                return Ok();
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound(id);
+            }
+            catch (TricycleNotAvailableException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Signals the tricycle entering a danger zone.
         /// </summary>
         /// <param name="id">The ID of the tricycle.</param>

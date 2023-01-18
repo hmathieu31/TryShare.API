@@ -26,8 +26,7 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
         /// Requests the end of booking.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        Task RequestEndOfBookingAsync();
+        Task RequestEndOfBookingAsync(Tricycle tricycle);
         /// <summary>
         /// Signals that the tricycle is entering danger zone.
         /// </summary>
