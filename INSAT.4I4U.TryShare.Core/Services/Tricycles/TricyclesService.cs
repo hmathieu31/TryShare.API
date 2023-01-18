@@ -51,7 +51,7 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             if (tricycle is null)
                 throw new ArgumentNullException(nameof(tricycle));
 
-            if (!tricycle.IsAvailable)
+            if (tricycle.IsAvailable)
                 throw new TricycleNotAvailableException();
 
             return RequestTricycleEndOfBookingInternalAsync(tricycle);
