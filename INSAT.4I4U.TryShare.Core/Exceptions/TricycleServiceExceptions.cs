@@ -17,4 +17,16 @@ namespace INSAT._4I4U.TryShare.Core.Exceptions
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
+
+
+    [Serializable]
+    public class TricycleAvailableException : Exception
+    {
+        public TricycleAvailableException() { }
+        public TricycleAvailableException(string message) : base(message) { }
+        public TricycleAvailableException(string message, Exception inner) : base(message, inner) { }
+        protected TricycleAvailableException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
 }
