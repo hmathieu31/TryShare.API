@@ -3,7 +3,6 @@ using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 using INSAT._4I4U.TryShare.Core.Exceptions;
 using INSAT._4I4U.TryShare.Infrastructure.Exceptions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web.Resource;
 
@@ -22,7 +21,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="TricyclesController"/> class.
         /// </summary>
-        /// <param name="service">The service operating on Tricycles.</param>
+        /// <param name="service">The _repository operating on Tricycles.</param>
         public TricyclesController(ITricyleService service)
         {
             _service = service;
@@ -162,43 +161,6 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             {
                 return NotFound(id);
             }
-        }
-
-        /// <summary>
-        /// Updates the tricycle.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="tricycle">The tricycle.</param>
-        /// <returns></returns>
-        /// <remarks>Test method to be deleted</remarks>
-        [Authorize]
-        [RequiredScope("access_as_user")]
-        [HttpPut("{id}", Name = nameof(UpdateTricycle))]
-        public async Task<IActionResult> UpdateTricycle(int id, Tricycle tricycle)
-        {
-            if (id != tricycle.Id)
-                return BadRequest();
-
-            try
-            {
-                await _service.UpdateAsync(tricycle);
-            }
-            catch (EntityNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await _service.GetByIdAsync(id) is null)
-                {
-                    return NotFound(id);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
         }
     }
 }
