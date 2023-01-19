@@ -92,7 +92,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// <returns></returns>
         [Authorize]
         [RequiredScope("access_as_user")]
-        [HttpPost("{id}/requestEnOfBooking", Name = nameof(RequestTricycleEndOfBooking))]
+        [HttpPost("{id}/requestEndOfBooking", Name = nameof(RequestTricycleEndOfBooking))]
         public async Task<ActionResult> RequestTricycleEndOfBooking(int id)
         {
             var tricycle = await _service.GetByIdAsync(id);
