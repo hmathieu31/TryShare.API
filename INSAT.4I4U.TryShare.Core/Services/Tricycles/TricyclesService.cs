@@ -19,9 +19,11 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
             _tricycleRepository = tricycleRepository;
         }
 
-        public async Task<List<Tricycle>> GetAllAsync()
+        public async Task<List<Tricycle>> GetAvailableTricyclesAsync()
         {
-            return (List<Tricycle>)await _tricycleRepository.GetAllAsync();
+            return (await _tricycleRepository.GetAllAsync())
+                .Where(t => t.IsAvailable)
+                .ToList();
         }
 
         public async Task<Tricycle?> GetByIdAsync(int id)

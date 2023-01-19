@@ -9,7 +9,11 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
 {
     public interface ITricyleService
     {
-        Task<List<Tricycle>> GetAllAsync();
+        /// <summary>
+        /// Get all currently available tricycles.
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Tricycle>> GetAvailableTricyclesAsync();
         /// <summary>
         /// Gets the tricycle by identifier.
         /// </summary>
