@@ -35,7 +35,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<Tricycle>>> GetTricycles()
         {
-            return await _service.GetAllAsync();
+            return await _service.GetAvailableTricyclesAsync();
         }
 
         /// <summary>
