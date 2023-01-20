@@ -5,8 +5,6 @@ namespace INSAT._4I4U.TryShare.Core.Models
 {
     /// <summary>
     /// A connected tricyle.
-    /// LastKnownLocation is determined by LastKnownLongitude and LastKnownLatitude.
-    /// TODO: Add range on latitude and longitude values
     /// </summary>
     public class Tricycle : EntityBase
     {
@@ -18,6 +16,9 @@ namespace INSAT._4I4U.TryShare.Core.Models
         [Range(0, MaximumPercentage, ErrorMessage = "The value must be a whole percentage")]
         public required int BatteryPercentage { get; set; }
         public required bool IsAvailable { get; set; }
+
+        [Range(0, 5, ErrorMessage = "The value must be a whole number between 0 and 5")]
+        public int Rating { get; set; }
         public required bool IsInDangerZone { get; set; }
     }
 }
