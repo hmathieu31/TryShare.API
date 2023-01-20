@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using INSAT._4I4U.TryShare.Core.Interfaces.Services;
+﻿using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Interfaces.Repository;
 using INSAT._4I4U.TryShare.Core.Exceptions;
@@ -47,14 +42,14 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
 
         private async Task RequestTricycleBookingInternalAsync(Tricycle tricycle)
         {
-            var currentTricycle = await _tricycleRepository.GetByIdAsync(tricycle.Id);
-            if (currentTricycle is null)
+            var tricycleDb = await _tricycleRepository.GetByIdAsync(tricycle.Id);
+            if (tricycleDb is null)
                 throw new TricycleNotFoundException();
 
-            currentTricycle.IsAvailable = false;
-            currentTricycle.Rating = _evaluationService.ComputeNewOverallRating(currentTricycle.Rating, tricycle.Rating);
+            tricycleDb.IsAvailable = false;
+            tricycleDb.Rating = _evaluationService.ComputeNewOverallRating(tricycleDb.Rating, tricycle.Rating);
 
-            await _tricycleRepository.UpdateAsync(tricycle);
+            await _tricycleRepository.UpdateAsync(tricycleDb);
         }
 
         public Task RequestEndOfBookingAsync(Tricycle tricycle)
@@ -70,14 +65,14 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
 
         private async Task RequestTricycleEndOfBookingInternalAsync(Tricycle tricycle)
         {
-            var currentTricycle = await _tricycleRepository.GetByIdAsync(tricycle.Id);
-            if (currentTricycle is null)
+            var tricycleDb = await _tricycleRepository.GetByIdAsync(tricycle.Id);
+            if (tricycleDb is null)
                 throw new TricycleNotFoundException();
 
-            currentTricycle.IsAvailable = true;
-            currentTricycle.Rating = _evaluationService.ComputeNewOverallRating(currentTricycle.Rating, tricycle.Rating);
+            tricycleDb.IsAvailable = true;
+            tricycleDb.Rating = _evaluationService.ComputeNewOverallRating(tricycleDb.Rating, tricycle.Rating);
 
-            await _tricycleRepository.UpdateAsync(tricycle);
+            await _tricycleRepository.UpdateAsync(tricycleDb);
         }
 
         public Task SignalEnteringDangerZoneAsync(Tricycle tricycle)

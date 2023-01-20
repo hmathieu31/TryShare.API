@@ -59,14 +59,21 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// Requests the start of the booking for a tricycle.
         /// </summary>
         /// <param name="id">The identifier of the tricycle.</param>
+        /// <param name="tricycle">
+        /// The tricycle requesting to be booked. 
+        /// Its rating is used to compute the new rating.
+        /// </param>
         /// <returns></returns>
-        [Authorize]
-        [RequiredScope("access_as_user")]
+        //[Authorize]
+        //[RequiredScope("access_as_user")]
         [HttpPost("{id}/requestBooking", Name = nameof(RequestTricycleBooking))]
-        public async Task<ActionResult> RequestTricycleBooking(int id)
+        public async Task<ActionResult> RequestTricycleBooking(int id, Tricycle tricycle)
         {
-            var tricycle = await _service.GetByIdAsync(id);
-            if (tricycle is null)
+            if (id != tricycle.Id)
+                return BadRequest("The tricycle ID in the URL and in the body do not match");
+
+            var tricycleDb = await _service.GetByIdAsync(id);
+            if (tricycleDb is null)
                 return NotFound(id);
 
             try
@@ -88,14 +95,21 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// Requests the start of the booking for a tricycle.
         /// </summary>
         /// <param name="id">The identifier of the tricycle.</param>
+        /// <param name="tricycle"> 
+        /// The tricycle requesting to be booked.
+        /// Its rating is used to compute the new rating.
+        /// </param>
         /// <returns></returns>
-        [Authorize]
-        [RequiredScope("access_as_user")]
+        //[Authorize]
+        //[RequiredScope("access_as_user")]
         [HttpPost("{id}/requestEndOfBooking", Name = nameof(RequestTricycleEndOfBooking))]
-        public async Task<ActionResult> RequestTricycleEndOfBooking(int id)
+        public async Task<ActionResult> RequestTricycleEndOfBooking(int id, Tricycle tricycle)
         {
-            var tricycle = await _service.GetByIdAsync(id);
-            if (tricycle is null)
+            if (id != tricycle.Id)
+                return BadRequest("The tricycle ID in the URL and in the body do not match");
+
+            var tricycleDb = await _service.GetByIdAsync(id);
+            if (tricycleDb is null)
                 return NotFound(id);
 
             try
