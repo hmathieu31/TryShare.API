@@ -40,7 +40,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 
             try
             {
-                await _service.UpdateTricycleInfo(tricycle);
+                await _service.UpdateTricycleInfoAsync(tricycle);
             }
             catch (TricycleNotFoundException)
             {
