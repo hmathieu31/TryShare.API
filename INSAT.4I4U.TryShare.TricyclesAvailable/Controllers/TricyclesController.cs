@@ -64,8 +64,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// Its rating is used to compute the new rating.
         /// </param>
         /// <returns></returns>
-        //[Authorize]
-        //[RequiredScope("access_as_user")]
+        [Authorize]
+        [RequiredScope("access_as_user")]
         [HttpPost("{id}/requestBooking", Name = nameof(RequestTricycleBooking))]
         public async Task<ActionResult> RequestTricycleBooking(int id, Tricycle tricycle)
         {
@@ -100,8 +100,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// Its rating is used to compute the new rating.
         /// </param>
         /// <returns></returns>
-        //[Authorize]
-        //[RequiredScope("access_as_user")]
+        [Authorize]
+        [RequiredScope("access_as_user")]
         [HttpPost("{id}/requestEndOfBooking", Name = nameof(RequestTricycleEndOfBooking))]
         public async Task<ActionResult> RequestTricycleEndOfBooking(int id, Tricycle tricycle)
         {

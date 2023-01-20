@@ -84,7 +84,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
             // Remove after debug
             IdentityModelEventSource.ShowPII = true;
 
-
+            app.MigrateDatabase();
             app.Run();
         }
 
@@ -98,6 +98,17 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
                 .AddScoped<ITricyleService, TricyclesService>();
 
             return builder;
+        }
+
+        private static WebApplication MigrateDatabase(this WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<ApplicationDbContext>();
+
+            context.Database.Migrate();
+
+            return app;
         }
     }
 }
