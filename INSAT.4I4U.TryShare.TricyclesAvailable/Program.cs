@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
 using INSAT._4I4U.TryShare.Core.Services.Microcontroller;
+using INSAT._4I4U.TryShare.Core.Interfaces.Evaluation;
+using INSAT._4I4U.TryShare.Core.Services.Evaluation;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace INSAT._4I4U.TryShare.TricyclesAvailable
@@ -92,6 +94,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable
                 .AddScoped<IRepository<Tricycle>, TricycleRepository>()
                 .AddTransient<DbInitialiser>()
                 .AddTransient<IMicrocontrollerService, MicrocontrollerService>()
+                .AddSingleton<IEvaluationService, EvaluationService>()
                 .AddScoped<ITricyleService, TricyclesService>();
 
             return builder;

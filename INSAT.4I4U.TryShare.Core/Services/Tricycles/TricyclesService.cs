@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using INSAT._4I4U.TryShare.Core.Interfaces.Services;
+﻿using INSAT._4I4U.TryShare.Core.Interfaces.Services;
 using INSAT._4I4U.TryShare.Core.Models;
 using INSAT._4I4U.TryShare.Core.Interfaces.Repository;
 using INSAT._4I4U.TryShare.Core.Exceptions;
+using INSAT._4I4U.TryShare.Core.Interfaces.Evaluation;
 
 namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
 {
     public class TricyclesService : ITricyleService
     {
         private readonly IRepository<Tricycle> _tricycleRepository;
+        private readonly IEvaluationService _evaluationService;
 
-        public TricyclesService(IRepository<Tricycle> tricycleRepository)
+        public TricyclesService(IRepository<Tricycle> tricycleRepository, IEvaluationService evaluationService)
         {
             _tricycleRepository = tricycleRepository;
+            this._evaluationService = evaluationService;
         }
 
         public async Task<List<Tricycle>> GetAvailableTricyclesAsync()
@@ -44,8 +42,14 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
 
         private async Task RequestTricycleBookingInternalAsync(Tricycle tricycle)
         {
-            tricycle.IsAvailable = false;
-            await _tricycleRepository.UpdateAsync(tricycle);
+            var tricycleDb = await _tricycleRepository.GetByIdAsync(tricycle.Id);
+            if (tricycleDb is null)
+                throw new TricycleNotFoundException();
+
+            tricycleDb.IsAvailable = false;
+            tricycleDb.Rating = _evaluationService.ComputeNewOverallRating(tricycleDb.Rating, tricycle.Rating);
+
+            await _tricycleRepository.UpdateAsync(tricycleDb);
         }
 
         public Task RequestEndOfBookingAsync(Tricycle tricycle)
@@ -54,15 +58,21 @@ namespace INSAT._4I4U.TryShare.Core.Services.Tricycles
                 throw new ArgumentNullException(nameof(tricycle));
 
             if (tricycle.IsAvailable)
-                throw new TricycleNotAvailableException();
+                throw new InvalidOperationException("Tricycle is already available");
 
             return RequestTricycleEndOfBookingInternalAsync(tricycle);
         }
 
         private async Task RequestTricycleEndOfBookingInternalAsync(Tricycle tricycle)
         {
-            tricycle.IsAvailable = true;
-            await _tricycleRepository.UpdateAsync(tricycle);
+            var tricycleDb = await _tricycleRepository.GetByIdAsync(tricycle.Id);
+            if (tricycleDb is null)
+                throw new TricycleNotFoundException();
+
+            tricycleDb.IsAvailable = true;
+            tricycleDb.Rating = _evaluationService.ComputeNewOverallRating(tricycleDb.Rating, tricycle.Rating);
+
+            await _tricycleRepository.UpdateAsync(tricycleDb);
         }
 
         public Task SignalEnteringDangerZoneAsync(Tricycle tricycle)
