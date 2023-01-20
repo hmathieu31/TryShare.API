@@ -21,7 +21,7 @@ namespace INSAT._4I4U.TryShare.Core.Services.Microcontroller
             this._repository = repository;
         }
         
-        public async Task UpdateTricycleInfo(TricycleMicrocontrollerDto tricycleDto)
+        public async Task UpdateTricycleInfoAsync(TricycleMicrocontrollerDto tricycleDto)
         {
             var currentTricycle = await _repository.GetByIdAsync(tricycleDto.Id);
             if (currentTricycle is null)
