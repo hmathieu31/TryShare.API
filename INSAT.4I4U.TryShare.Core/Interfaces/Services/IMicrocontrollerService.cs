@@ -16,6 +16,6 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
         /// </summary>
         /// <param name="tricycleDto"></param>
         /// <returns></returns>
-        Task UpdateTricycleInfo(TricycleMicrocontrollerDto tricycleDto);
+        Task UpdateTricycleInfoAsync(TricycleMicrocontrollerDto tricycleDto);
     }
 }
