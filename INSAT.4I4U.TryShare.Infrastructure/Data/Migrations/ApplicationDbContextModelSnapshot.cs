@@ -49,7 +49,7 @@ namespace INSAT._4I4U.TryShare.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tricycles");
+                    b.ToTable("Tricycles", (string)null);
                 });
 #pragma warning restore 612, 618
         }
