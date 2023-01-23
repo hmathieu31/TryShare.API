@@ -65,8 +65,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// Its rating is used to compute the new rating.
         /// </param>
         /// <returns></returns>
-        [Authorize]
-        [RequiredScope("access_as_user")]
+        //[Authorize]
+        //[RequiredScope("access_as_user")]
         [HttpPost("{id}/requestBooking", Name = nameof(RequestTricycleBooking))]
         public async Task<ActionResult> RequestTricycleBooking(int id, TricycleApplicationDto tricycle)
         {
@@ -79,7 +79,7 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
             
             try
             {
-                await _service.RequestTricycleBookingAsync(tricycle);
+                await _service.RequestTricycleBookingAsync(tricycleDb, tricycle.Rating);
                 return Ok();
             }
             catch (ArgumentNullException)
@@ -101,8 +101,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// Its rating is used to compute the new rating.
         /// </param>
         /// <returns></returns>
-        [Authorize]
-        [RequiredScope("access_as_user")]
+        //[Authorize]
+        //[RequiredScope("access_as_user")]
         [HttpPost("{id}/requestEndOfBooking", Name = nameof(RequestTricycleEndOfBooking))]
         public async Task<ActionResult> RequestTricycleEndOfBooking(int id, TricycleApplicationDto tricycle)
         {
@@ -115,16 +115,12 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
 
             try
             {
-                await _service.RequestEndOfBookingAsync(tricycle);
+                await _service.RequestEndOfBookingAsync(tricycleDb, tricycle.Rating);
                 return Ok();
             }
             catch (ArgumentNullException)
             {
                 return NotFound(id);
-            }
-            catch (TricycleNotAvailableException ex)
-            {
-                return BadRequest(ex.Message);
             }
         }
 
@@ -133,8 +129,8 @@ namespace INSAT._4I4U.TryShare.TricyclesAvailable.Controllers
         /// </summary>
         /// <param name="id">The ID of the tricycle.</param>
         /// <returns></returns>
-        [Authorize]
-        [RequiredScope("access_as_user")]
+        //[Authorize]
+        //[RequiredScope("access_as_user")]
         [HttpPost("{id}/signalDanger", Name = nameof(SignalEnteringDangerZone))]
         public async Task<ActionResult> SignalEnteringDangerZone(int id)
         {
