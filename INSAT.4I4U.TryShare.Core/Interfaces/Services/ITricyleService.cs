@@ -25,12 +25,12 @@ namespace INSAT._4I4U.TryShare.Core.Interfaces.Services
         /// </summary>
         /// <param name="tricycle">The tricycle.</param>
         /// <returns></returns>
-        Task RequestTricycleBookingAsync(Tricycle tricycle);
+        Task RequestTricycleBookingAsync(Tricycle tricycle, int newRating);
         /// <summary>
         /// Requests the end of booking.
         /// </summary>
         /// <returns></returns>
-        Task RequestEndOfBookingAsync(Tricycle tricycle);
+        Task RequestEndOfBookingAsync(Tricycle tricycle, int newRating);
         /// <summary>
         /// Signals that the tricycle is entering danger zone.
         /// </summary>
